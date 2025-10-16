@@ -36,14 +36,14 @@ void usart_send_char(USART_TypeDef* usart, char c){
     usart->DR = c;
 }
 
-void usart_send_string(USART_TypeDef* usart, char* str){
-    while(*str){ 
-        while (!(USART1->SR & USART_SR_TXE)); //esperar mientras el DR no este listo para admitir un nuevo char del string
-        USART1->DR = *str++; //recorre el string
+void usart_send_string(USART_TypeDef* usart, char*str){
+    while(*str){//mientras haya caracteres en la direccion de la memoria de str
+        while (!(usart->SR & USART_SR_TXE)); //esperar mientras el DR no este listo para admitir un nuevo char del string
+        usart->DR = *str++; //recorre el puntero
     }
 }
 
 char usart_recibir_char(USART_TypeDef* usart){
     while(!(usart->SR & USART_SR_RXNE)); //esperar mientras no haya nada nuevo para leer en el DR
-    return usart->DR;
+    return usart->DR; //lo leo y retorno eso
 }
