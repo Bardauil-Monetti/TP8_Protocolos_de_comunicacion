@@ -28,7 +28,10 @@ void usart_init(USART_TypeDef* usart, int baudrate){
         GPIOA->CRH &= ~(0XF << (11 * 4));
         GPIOA->CRH |= (0x4 << (11 * 4)); //Floating input
     }
-    usart->BRR = (16 * baudrate) / 36000000;
+    float divisor = (float)pclk_freq / (16.0f * (float)baudrate);
+    uint16_t mantissa = (uint16_t)divisor; // Parte entera
+    uint16_t fraction = (uint16_t)((divisor - (float)mantissa) * 16.0f); // Parte con coma
+    USARTx->BRR = (mantissa << 4) | (fraction & 0x0F);
 }
 
 void usart_send_char(USART_TypeDef* usart, char c){
