@@ -9,10 +9,10 @@ void usart_init(USART_TypeDef* usart, int baudrate){
     if(usart == USART1){ 
         // UART1: APB2 (72MHz) - TX = PA9, RX = PA10
         RCC->APB2ENR|=RCC_APB2ENR_USART1EN;
-        GPIOA->CRH &= ~(0XF << (9 *4));
-        GPIOA->CRH |= (0xA << (9 *4)); //1010 es para Función alternativa Push-Pull.
-        GPIOA->CRH &= ~(0XF << (10 *4));
-        GPIOA->CRH |= (0x4 << (10 *4)); //Floating input
+        GPIOA->CRH &= ~(0XF << ((9%8) *4));
+        GPIOA->CRH |= (0xA << ((9%8) *4)); //1010 es para Función alternativa Push-Pull.
+        GPIOA->CRH &= ~(0XF << ((10%8) *4));
+        GPIOA->CRH |= (0x4 << ((10%8) *4)); //Floating input
     }else if(usart == USART2){
         // UART2: APB1 (36MHz) - TX = PA2, RX = PA3
         RCC->APB2ENR|=RCC_APB1ENR_USART2EN;
@@ -23,10 +23,10 @@ void usart_init(USART_TypeDef* usart, int baudrate){
     }else if(usart == USART3){
         // UART3: APB1 (36MHz) - TX = PB10, RX = PB11
         RCC->APB2ENR|=RCC_APB1ENR_USART3EN;
-        GPIOA->CRH &= ~(0XF << (10 * 4));
-        GPIOA->CRH |= (0xA << (10 * 4)); //1010 es para Función alternativa Push-Pull.
-        GPIOA->CRH &= ~(0XF << (11 * 4));
-        GPIOA->CRH |= (0x4 << (11 * 4)); //Floating input
+        GPIOA->CRH &= ~(0XF << ((10%8) * 4));
+        GPIOA->CRH |= (0xA << ((10%8) * 4)); //1010 es para Función alternativa Push-Pull.
+        GPIOA->CRH &= ~(0XF << ((11%8) * 4));
+        GPIOA->CRH |= (0x4 << ((11%8) * 4)); //Floating input
     }
     float divisor = (float)pclk_freq / (16.0f * (float)baudrate);
     uint16_t mantissa = (uint16_t)divisor; // Parte entera
