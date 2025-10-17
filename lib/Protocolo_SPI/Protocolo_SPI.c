@@ -19,12 +19,12 @@ void spi_init(SPI_TypeDef* spi){
     }else{
         RCC->APB1ENR |= RCC_APB1ENR_SPI2EN; 
         for(int i = 12; i < 16; i++){
-            GPIOA->CRL &= ~(0xF << (i * 4));
+            GPIOA->CRH &= ~(0xF << ((i%8) * 4));
         }
-        GPIOA->CRL |= (0b0010 << (12 * 4)); // SS
-        GPIOA->CRL |= (0b1010 << (13 * 4)); // SCK
-        GPIOA->CRL |= (0b0100 << (14 * 4)); // MOSI
-        GPIOA->CRL |= (0b1010 << (15 * 4)); // MISO
+        GPIOA->CRH |= (0b0010 << ((12%8) * 4)); // SS
+        GPIOA->CRH |= (0b1010 << ((13%8) * 4)); // SCK
+        GPIOA->CRH |= (0b0100 << ((14%8) * 4)); // MOSI
+        GPIOA->CRH |= (0b1010 << ((15%8) * 4)); // MISO
         
     }
 }
