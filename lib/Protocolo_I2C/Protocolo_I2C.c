@@ -19,10 +19,10 @@ void i2c_init(I2C_TypeDef* i2c){
         //PB10 = TX, PB11 = RX para I2C2
         RCC->APB1ENR |= RCC_APB1ENR_I2C2EN;
         // Ambos estan configurados en salida de Función Alternativa Open-Drain
-        GPIOB->CRH &= ~(0xF << (6 * 4));
-        GPIOB->CRH |= (0b1011 << (6 * 4));
-        GPIOB->CRH &= ~(0xF << (7 * 4));
-        GPIOB->CRH |= (0b1011 << (7 * 4));
+        GPIOB->CRH &= ~(0xF << ((6%8) * 4));
+        GPIOB->CRH |= (0b1011 << ((6%8) * 4));
+        GPIOB->CRH &= ~(0xF << ((7%8) * 4));
+        GPIOB->CRH |= (0b1011 << ((7%8) * 4));
     }
 }
 
